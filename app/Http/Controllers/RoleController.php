@@ -19,7 +19,7 @@ class RoleController extends Controller
     function addRole(Request $req)
     {
         $validated = $req->validate([
-            'name' => 'required',
+            'role' => 'required',
         ]);
         $user = ucfirst($req->role);
         if (UserRole::where('name', $user)->exists()) {

@@ -43,7 +43,7 @@
                         <a class="nav-link" href="{{ route('add_role_form') }}">Add Role</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('add_new_user') }}">Add New User</a>
+                        <a class="nav-link" href="{{ route('show_or_edit_form') }}">Add New User</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('show_all_users') }}">Show All Users</a>
@@ -54,6 +54,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/add_permission_and_role') }}">Add Permission and Roles</a>
                     </li>
+
                 @endauth
                 @guest
                     <li class="nav-item">

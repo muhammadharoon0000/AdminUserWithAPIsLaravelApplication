@@ -2,84 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogUser;
-use App\Models\Post;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
-
 
 class UserController extends Controller
 {
 
     function index()
     {
-        $user = BlogUser::all();
-        // return view('showAllUsers', compact("data"));
-        // return view('showAllUsers')->with('data',$user);
+        $user = User::where('user_id', '!=', 1)->get();
         return view('show_all_users', [
             'data' => $user,
             'message' => 'Test'
         ]);
     }
-
-    function showForm()
+    function showOrEditForm($id = null)
     {
+        $roles =  UserRole::pluck("name", "id");
         return view('add_new_user', [
-            'message' => 'asdad'
+            'user' => $id ? User::find($id) : "",
+            'roles' => $roles
         ]);
     }
-
-    function create(Request $req)
+    function UpdateOrCreate(Request $req, $id = null)
     {
+        $user = $id ? User::find($id) : new User;
+        if ($id) {
+            $rule = $user->email == $req->email ? '' : 'unique:users,email';
+        } else {
+            $rule = 'unique:users,email';
+        }
         $validated = $req->validate([
             'name' => 'required | max:255',
-            'email' => 'required',
-            'password' => 'required',
+            'email' => ['email', 'required', $rule],
+            'role' => 'required',
+            'password' => 'min:6 | required_with:confirm_password | same:confirm_password',
+            'confirm_password' => 'min:6'
         ]);
-
-        $users = new BlogUser;
-        $users->name = $req->name;
-        $users->email = $req->email;
-        $users->password = Hash::make($req->password);
-        $users->save();
+        $user = $id ? User::find($id) : new User;
+        $user->name = ucwords(ucfirst($req->name));
+        $user->email = $req->email;
+        $user->user_id = $req->role;
+        $user->password = Hash::make($req->password);
+        $user->save();
 
         return redirect()->route('show_all_users')->with('message', 'Successfully Created');
     }
 
-    function edit($id)
-    {
-        $data = BlogUser::find($id);
-        if ($data == null) {
-            return "User Not Found";
-        }
-        return view('edit_user_form', compact('data'));
-    }
-
-    function update(Request $req, $id)
-    {
-        $user = BlogUser::find($id);
-        $user->name = $req->name;
-        $user->email = $req->email;
-        $user->password = $req->password;
-        $user->save();
-
-        return redirect()->route('show_all_users')->with('message', 'Successfully Updated');
-    }
-
     function delete($id)
     {
-        $user = BlogUser::find($id);
+        $user = User::find($id);
         $user->delete();
         return redirect()->route('show_all_users')->with('message', 'Successfully Deleted');
     }
 
     function showUser($id)
     {
-        $data = BlogUser::find($id);
+        $data = User::find($id);
         return view('show_single_user')->with('data', $data);
     }
 }

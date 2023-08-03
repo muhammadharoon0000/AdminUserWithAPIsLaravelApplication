@@ -10,9 +10,17 @@ class UserRoleSeeder extends Seeder
 {
     public function run()
     {
-        $permissions = Permission::pluck("id");
-        $role_user = UserRole::where('name', 'Admin')->first();
-        if ($role_user != null)
-            $role_user->permission()->sync($permissions);
+        UserRole::updateOrCreate([
+            'name' => 'Admin'
+        ], [
+            'name' => 'Admin',
+            'is_system' => true
+        ]);
+        UserRole::updateOrCreate([
+            'name' => 'Customer'
+        ], [
+            'name' => 'Customer',
+            'is_system' => false
+        ]);
     }
 }

@@ -12,6 +12,7 @@
             </ul>
         </div>
     @endif
+
     <form method="POST" action="{{ route('add_role') }}">
         @csrf
         <div class="form-group mt-5">
