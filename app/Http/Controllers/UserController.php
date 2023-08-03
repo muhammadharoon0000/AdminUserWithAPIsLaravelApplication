@@ -29,23 +29,22 @@ class UserController extends Controller
     function UpdateOrCreate(Request $req, $id = null)
     {
         $user = $id ? User::find($id) : new User;
-        if ($id) {
-            $rule = $user->email == $req->email ? '' : 'unique:users,email';
-        } else {
-            $rule = 'unique:users,email';
+        if (!$req->password) {
+            unset($req['password']);
+            unset($req['confirm_password']);
         }
         $validated = $req->validate([
             'name' => 'required | max:255',
-            'email' => ['email', 'required', $rule],
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'role' => 'required',
-            'password' => 'min:6 | required_with:confirm_password | same:confirm_password',
-            'confirm_password' => 'min:6'
+            'password' => 'sometimes | min:6 | required_with:confirm_password | same:confirm_password',
+            'confirm_password' => 'sometimes | min:6'
         ]);
-        $user = $id ? User::find($id) : new User;
+
         $user->name = ucwords(ucfirst($req->name));
         $user->email = $req->email;
         $user->user_id = $req->role;
-        $user->password = Hash::make($req->password);
+        if ($req->password) $user->password = Hash::make($req->password);
         $user->save();
 
         return redirect()->route('show_all_users')->with('message', 'Successfully Created');

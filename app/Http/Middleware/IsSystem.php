@@ -18,12 +18,13 @@ class IsSystem
 
         $permissions = $role ? collect(User::where('name', $role)->first()->userRole->permission)->pluck("name")->toArray() : collect(Auth::user()->userRole->permission)->pluck("name")->toArray();
 
-        if ($role) {
+        $roleExist = UserRole::where('name', $role)->first();
+
+        if ($role && $roleExist) {
             if ($role == $current_user_role && in_array($current_route, $permissions)) {
                 return $next($request);
             }
         } else if (in_array($current_route, $permissions)) {
-
             return $next($request);
         }
         return redirect(url("/welcome"))->with("message", "You are not authorized");

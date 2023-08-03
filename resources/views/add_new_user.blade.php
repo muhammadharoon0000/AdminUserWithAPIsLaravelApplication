@@ -39,11 +39,13 @@
 
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+            <input name="password" type="password" class="form-control" id="input_password">
+            <input type="checkbox" id="show_password">Show Password
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Confirm Password</label>
-            <input name="confirm_password" type="password" class="form-control" id="exampleInputPassword1">
+            <input name="confirm_password" type="password" class="form-control" id="input_confirm_password">
+            <input type="checkbox" id="show_confirm_password">Show Password
         </div>
         <button type="submit" class="btn btn-primary my-2">Submit</button>
     </form>
