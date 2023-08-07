@@ -46,7 +46,8 @@
                         <a class="nav-link" href="{{ route('show_or_edit_form') }}">Add New User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('show_all_users') }}">Show All Users</a>
+                        <a class="nav-link" id="show_all_users">Show All Users</a>
+                        {{-- href="{{ route('show_all_users') }}" --}}
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
@@ -69,19 +70,22 @@
             </ul>
         </div>
     </nav>
+
     <div class="container">
         @yield('section')
     </div>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
-        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <script src="//cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="{{ asset('/javascript/jQuery.js') }}"></script>
+    <script src="//cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>

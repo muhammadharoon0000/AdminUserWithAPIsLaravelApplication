@@ -13,6 +13,7 @@
             </ul>
         </div>
     @endif
+
     <form method="POST" action="/update_or_create{{ isset($user->id) ? '/' . $user->id : null }}">
         @csrf
         <div class="form-group">

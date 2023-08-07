@@ -1,19 +1,38 @@
 <?php $serialNo = 1; ?>
+@include('models.edit_user_modal')
+@include('models.add_user_modal')
 @extends('layouts._header')
 @section('section')
+    @if (session('message'))
+        <div class="w-50 d-flex  justify-content-center alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     @if (Auth::check() && Auth::user()->isAdmin())
         <h1>Logged in as admin</h1><br>
+        <h7>
+            <button class="btn btn-dark text-white my-3" id="add_new_user">Add New User</button>
+        </h7>
         <table class="table mt-5" id="myTable2">
             <thead>
                 <tr>
-                    <th scope="row">Serial</th>
+                    <th scope="row">Name</th>
                     <th scope="row">Roles</th>
-                    <th scope="row">Permissions</th>
+                    <th scope="row">Email</th>
                     <th scope="row">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($user_roles as $user_role)
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {{-- @foreach ($user_roles as $user_role)
                     <tr>
                         <td scope="col">{{ $serialNo++ }}</td>
                         <td scope="col">{{ $user_role->name }}</td>
@@ -34,7 +53,7 @@
                         </td>
 
                     </tr>
-                @endforeach
+                @endforeach --}}
             </tbody>
         </table>
     @else

@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\UserApiController;
+
+use App\Http\Controllers\UsersApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/user_api_controller/index', [UserApiController::class, 'index']);
-Route::post('/user_api_controller/show/{id}', [UserApiController::class, 'show']);
-Route::post('/user_api_controller/insert', [UserApiController::class, 'insert']);
-Route::post('/user_api_controller/delete/{id}', [UserApiController::class, 'delete']);
+Route::resource('users', UsersApiController::class)->middleware('auth:api');
