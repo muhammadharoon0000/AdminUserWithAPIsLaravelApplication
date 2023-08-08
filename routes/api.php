@@ -24,4 +24,4 @@ Route::get('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'login']);
 
 Route::apiResource('/employee', EmployeeController::class)->middleware('auth:api');
-// Route::resource('users', UsersApiController::class)->middleware('auth:api');
+Route::resource('users', UsersApiController::class);

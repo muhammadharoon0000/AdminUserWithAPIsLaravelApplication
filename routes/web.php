@@ -9,6 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\userController;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +63,7 @@ Route::post('/login', [AuthController::class, 'loginUser'])->name('login');
 
 
 Route::get('/test', function (Request $request) {
+    Artisan::call('db:seed');
     // return collect(Auth::user()->userRole->permission)->pluck("name")->toArray();
     // return collect(User::where('name', "Admin")->first()->userRole->permission);
     // return Auth::user()->name;

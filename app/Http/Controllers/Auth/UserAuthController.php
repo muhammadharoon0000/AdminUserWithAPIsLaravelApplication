@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserAuthController extends Controller
 {
@@ -31,18 +32,19 @@ class UserAuthController extends Controller
 
     public function login(Request $request)
     {
-        $data = $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'email' => 'email|required',
             'password' => 'required'
         ]);
+        $data = $request->all();
 
-        if (!auth()->attempt($data)) {
-            return response(['error_message' => 'Incorrect Details. 
-            Please try again']);
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        } else {
+            auth()->attempt($data);
+            $token = auth()->user()->createToken('API Token')->accessToken;
+            return response(['user' => auth()->user(), 'token' => $token]);
         }
-
-        $token = auth()->user()->createToken('API Token')->accessToken;
-
-        return response(['user' => auth()->user(), 'token' => $token]);
     }
 }
