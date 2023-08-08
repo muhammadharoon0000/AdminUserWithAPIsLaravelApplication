@@ -1,6 +1,7 @@
 <?php
 
-
+use App\Http\Controllers\Auth\UserAuthController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\UsersApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('users', UsersApiController::class)->middleware('auth:api');
+Route::get('/register', [UserAuthController::class, 'register']);
+Route::get('/login', [UserAuthController::class, 'login']);
+
+Route::apiResource('/employee', EmployeeController::class)->middleware('auth:api');
+// Route::resource('users', UsersApiController::class)->middleware('auth:api');

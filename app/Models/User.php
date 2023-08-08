@@ -10,7 +10,7 @@ use Laravel\Passport\HasApiTokens;
 // class User extends Model  implements Illuminate\Contracts\Auth\Authenticatable
 class User extends \Illuminate\Foundation\Auth\User
 {
-    use HasApiTokens, HasFactory;
+    use HasFactory, HasApiTokens;
     function userRole()
     {
         return $this->belongsTo(UserRole::class, 'user_id');
@@ -20,4 +20,5 @@ class User extends \Illuminate\Foundation\Auth\User
     {
         return $this->userRole()->where('name', 'Admin')->exists() ? true : false;
     }
+    protected $fillable = ['name'];
 }
